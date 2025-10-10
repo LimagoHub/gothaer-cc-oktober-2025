@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bagoit-game"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "John Doe", email = "john_doe@gothaer.de" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/John Doe/bagoit-game#readme"
+Issues = "https://github.com/John Doe/bagoit-game/issues"
+Source = "https://github.com/John Doe/bagoit-game"
+
+[tool.hatch.version]
+path = "bagoit_game/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest==8.4.0",
+  "coverage==7.8.2"
+]
+
+[tool.hatch.envs.default.scripts]
+play = "python -m bagoit_game.app.Main"
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+  "coverage xml",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:bagoit_game tests}"
+
+[tool.coverage.run]
+source_pkgs = ["bagoit_game", "tests"]
+branch = true
+parallel = true
+omit = [
+  "bagoit_game/__about__.py",
+]
+
+[tool.coverage.paths]
+bagoit_game = ["bagoit_game", "*/bagoit-game/bagoit_game"]
+tests = ["tests", "*/bagoit-game/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
